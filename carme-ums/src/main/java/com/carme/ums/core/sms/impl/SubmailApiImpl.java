@@ -19,9 +19,7 @@ import java.util.Map;
 public class SubmailApiImpl implements SmsApi {
 
     private static Logger log = LoggerFactory.getLogger(SubmailApiImpl.class);
-
     private MESSAGEXsend  submail;
-
     public void init(String appId, String appKey, String signType) {
         AppConfig config = ConfigLoader.createConfig(appId, appKey, signType);
         submail = new MESSAGEXsend(config);

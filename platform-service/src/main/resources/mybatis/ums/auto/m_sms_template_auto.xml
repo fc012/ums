@@ -1,0 +1,233 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.carme.ums.dao.SmsTemplateDao">
+    <!-- ========================================================================
+      	自动生成sql
+    ========================================================================= -->
+    <resultMap id="BaseResultMap" type="smsTemplatePo">
+        <result column="id" property="id"/>
+        <result column="source" property="source"/>
+        <result column="template_no" property="templateNo"/>
+        <result column="third_template_no" property="thirdTemplateNo"/>
+        <result column="is_delete" property="isDelete"/>
+        <result column="created_by" property="createdBy"/>
+        <result column="created_at" property="createdAt"/>
+        <result column="changed_by" property="changedBy"/>
+        <result column="changed_at" property="changedAt"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        <![CDATA[
+        id ,
+        source ,
+        template_no ,
+        third_template_no ,
+        is_delete ,
+        created_by ,
+        created_at ,
+        changed_by ,
+        changed_at 
+        ]]>
+    </sql>
+
+    <!-- ========================================================================
+      	自动生成sql
+    ========================================================================= -->
+    <!--根据ID查询记录-->
+    <select id="getById" resultMap="BaseResultMap" parameterType="java.lang.Long">
+        select
+        <include refid="Base_Column_List"/>
+        from m_sms_template where id = #{id} and is_delete=0
+    </select>
+
+    <!--通过IDS查询多条记录-->
+    <select id="getByIds" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from m_sms_template where id in
+        <foreach item="item" index="index" collection="list"
+                 open="(" separator="," close=")">
+        #{item}
+        </foreach>
+        and is_delete = 0
+    </select>
+
+    <!--query基础查询-->
+    <select id="query" resultMap="BaseResultMap" parameterType="smsTemplatePo">
+        select
+        <include refid="Base_Column_List"/>
+        from m_sms_template where 1 = 1
+        <if test="id != null">
+            and id = #{id}
+        </if>
+        <if test="source != null">
+            and source = #{source}
+        </if>
+        <if test="templateNo != null">
+            and template_no = #{templateNo}
+        </if>
+        <if test="thirdTemplateNo != null">
+            and third_template_no = #{thirdTemplateNo}
+        </if>
+        <if test="isDelete != null">
+            and is_delete = #{isDelete}
+        </if>
+        <if test="createdBy != null">
+            and created_by = #{createdBy}
+        </if>
+        <if test="createdAt != null">
+            and created_at = #{createdAt}
+        </if>
+        <if test="changedBy != null">
+            and changed_by = #{changedBy}
+        </if>
+        <if test="changedAt != null">
+            and changed_at = #{changedAt}
+        </if>
+        and is_delete = 0
+    </select>
+
+
+    <!--save保存-->
+    <insert id="save" parameterType="smsTemplatePo" useGeneratedKeys="true" keyProperty="id">
+        insert into m_sms_template
+        (
+        source ,
+        template_no ,
+        third_template_no ,
+        is_delete ,
+        created_by ,
+        created_at ,
+        changed_by ,
+        changed_at 
+        ) values(
+        #{source},
+        #{templateNo},
+        #{thirdTemplateNo},
+        #{isDelete},
+        #{createdBy},
+        #{createdAt},
+        #{changedBy},
+        #{changedAt}
+        )
+    </insert>
+
+    <!--saveBatch批量保存-->
+    <insert id="saveBatch" parameterType="java.util.List" useGeneratedKeys="true" keyProperty="id">
+        insert into m_sms_template
+        (
+        source ,
+        template_no ,
+        third_template_no ,
+        is_delete ,
+        created_by ,
+        created_at ,
+        changed_by ,
+        changed_at 
+        ) values
+        <foreach collection="list" item="item" index="index" separator=",">
+            (
+            #{item.source},
+            #{item.templateNo},
+            #{item.thirdTemplateNo},
+            #{item.isDelete},
+            #{item.createdBy},
+            #{item.createdAt},
+            #{item.changedBy},
+            #{item.changedAt}
+            )
+        </foreach>
+    </insert>
+
+    <!--update更新-->
+    <update id="update" parameterType="smsTemplatePo">
+        update m_sms_template
+        <set>
+                <if test="source != null">
+                source = #{source},
+                </if>
+                <if test="templateNo != null">
+                template_no = #{templateNo},
+                </if>
+                <if test="thirdTemplateNo != null">
+                third_template_no = #{thirdTemplateNo},
+                </if>
+                <if test="isDelete != null">
+                is_delete = #{isDelete},
+                </if>
+                <if test="createdBy != null">
+                created_by = #{createdBy},
+                </if>
+                <if test="createdAt != null">
+                created_at = #{createdAt},
+                </if>
+                <if test="changedBy != null">
+                changed_by = #{changedBy},
+                </if>
+                <if test="changedAt != null">
+                changed_at = #{changedAt},
+                </if>
+        </set>
+        where id = #{id} and is_delete=0
+    </update>
+
+    <!--updateBatch批量更新-->
+    <update id="updateBatch" parameterType="java.util.List">
+        <foreach collection="list" item="item" index="index" separator=";">
+            update m_sms_template
+            <set>
+                    <if test="#{item.source} != null">
+                    source = #{item.source},
+                    </if>
+                    <if test="#{item.templateNo} != null">
+                    template_no = #{item.templateNo},
+                    </if>
+                    <if test="#{item.thirdTemplateNo} != null">
+                    third_template_no = #{item.thirdTemplateNo},
+                    </if>
+                    <if test="#{item.isDelete} != null">
+                    is_delete = #{item.isDelete},
+                    </if>
+                    <if test="#{item.createdBy} != null">
+                    created_by = #{item.createdBy},
+                    </if>
+                    <if test="#{item.createdAt} != null">
+                    created_at = #{item.createdAt},
+                    </if>
+                    <if test="#{item.changedBy} != null">
+                    changed_by = #{item.changedBy},
+                    </if>
+                    <if test="#{item.changedAt} != null">
+                    changed_at = #{item.changedAt},
+                    </if>
+            </set>
+            where id = #{item.id} and is_delete=0
+        </foreach>
+    </update>
+
+    <update id="logicDelById" parameterType="java.lang.Long">
+        update m_sms_template set is_delete=1 where id=#{id}
+    </update>
+
+    <!--通过IDS查询多条记录-->
+    <update id="logicDelByIds">
+        update m_sms_template set is_delete=1 where id in
+        <foreach item="item" index="index" collection="list"
+                 open="(" separator="," close=")">
+        #{item}
+        </foreach>
+    </update>
+    <!-- 根据id删除记录 -->
+    <delete id="deleteById">
+        delete from m_sms_template where id=#{id}
+    </delete>
+    <!-- 根据id列表删除记录 -->
+    <delete id="deleteByIds">
+        delete from m_sms_template where id in
+        <foreach item="item" index="index" collection="list"
+                 open="(" separator="," close=")">
+        #{item}
+        </foreach>
+    </delete>
+
+</mapper>

@@ -1,0 +1,13 @@
+<component name="libraryTable">
+  <library name="Maven: org.apache.submail:jsonlib:jdk15:2.2.3">
+    <CLASSES>
+      <root url="jar://$MAVEN_REPOSITORY$/org/apache/submail/jsonlib/2.2.3/jsonlib-2.2.3-jdk15.jar!/" />
+    </CLASSES>
+    <JAVADOC>
+      <root url="jar://$MAVEN_REPOSITORY$/org/apache/submail/jsonlib/2.2.3/jsonlib-2.2.3-javadoc.jar!/" />
+    </JAVADOC>
+    <SOURCES>
+      <root url="jar://$MAVEN_REPOSITORY$/org/apache/submail/jsonlib/2.2.3/jsonlib-2.2.3-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>

@@ -1,0 +1,284 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN" "http://ibatis.apache.org/dtd/sql-map-2.dtd" >
+ <sqlMap namespace="smsConfig" >
+
+    <!-- ======================================================================== 
+      COMMON （别名、resultMap、查询字段、sql...）
+    ========================================================================= -->
+    <typeAlias alias="smsConfig" type="com.carme.ums.bo.sms.SmsConfig" />
+    <typeAlias alias="smsConfigVo" type="com.carme.ums.vo.sms.SmsConfigVo" />
+    <typeAlias alias="querySmsConfigVo" type="com.carme.ums.vo.sms.QuerySmsConfigVo" />
+
+    <resultMap id="BaseResultMap" class="smsConfig">
+        <result column="id" property="id" />
+        <result column="source" property="source" />
+        <result column="platform" property="platform" />
+        <result column="config" property="config" />
+        <result column="is_delete" property="isDelete" />
+        <result column="created_by" property="createdBy" />
+        <result column="created_at" property="createdAt" />
+        <result column="changed_by" property="changedBy" />
+        <result column="changed_at" property="changedAt" />
+    </resultMap>
+
+    <resultMap id="voResultMap" class="smsConfigVo">
+        <result column="id" property="id" />
+        <result column="source" property="source" />
+        <result column="platform" property="platform" />
+        <result column="config" property="config" />
+        <result column="is_delete" property="isDelete" />
+        <result column="created_by" property="createdBy" />
+        <result column="created_at" property="createdAt" />
+        <result column="changed_by" property="changedBy" />
+        <result column="changed_at" property="changedAt" />
+    </resultMap>
+
+    <sql id="Base_Column_List" >
+        <![CDATA[
+              id ,
+              source ,
+              platform ,
+              config ,
+              is_delete ,
+              created_by ,
+              created_at ,
+              changed_by ,
+              changed_at 
+        ]]>
+    </sql>
+
+    <sql id="select_column">
+	     <![CDATA[
+	        	id ,
+	        	source ,
+	        	platform ,
+	        	config ,
+	        	is_delete ,
+	        	created_by ,
+	        	created_at ,
+	        	changed_by ,
+	        	changed_at 
+	    ]]>	 		
+	</sql>
+	
+	<sql id="querySmsConfigPage_where">
+		from m_sms_config 
+		where  1 = 1	
+		and is_delete = 0
+	</sql>
+    
+    <!-- ======================================================================== 
+      SELECT 
+    ========================================================================= -->
+    <!--根据ID查询记录-->
+    <select id="getById" resultMap="BaseResultMap" parameterClass="java.lang.Long" >
+      select 
+      <include refid="Base_Column_List" />
+      <![CDATA[
+      from m_sms_config
+      where id = #id# and is_delete=0
+      ]]>
+    </select>
+    
+    <!--分页查询-->
+    <select id="querySmsConfigPage" parameterClass="querySmsConfigVo"
+		resultMap="voResultMap">
+		<include refid="Page_SqlMap.pagePrefix"/>
+			select 
+			<include refid="smsConfig.select_column"/>
+			<include refid="smsConfig.querySmsConfigPage_where"/>
+		<include refid="Page_SqlMap.pageSuffix"/>
+	</select>
+	
+	<!--查询数据条数-->
+	<select id="querySmsConfigPage_count" parameterClass="querySmsConfigVo"  resultClass="java.lang.Integer">
+		select count(*)
+		<include refid="querySmsConfigPage_where"/>
+	</select>
+	
+	<!--通过Ids查询多条记录-->
+    <select id="getByIds" resultMap="BaseResultMap" parameterClass="smsConfig">
+	   select <include refid="Base_Column_List"/>
+	   from m_sms_config where is_delete = 0 and id in
+	   <iterate property="codes" open="(" close=")" conjunction=",">#codes[]#</iterate>  
+	</select>
+
+    <!--多条件组合查询-->
+    <select id="query" resultMap="voResultMap" parameterClass="smsConfigVo">
+        select <include refid="Base_Column_List"/>
+        from m_sms_config where is_delete = 0
+        <dynamic>
+            <isNotEmpty property="id" prepend="and">
+                <![CDATA[ id = #id# ]]>
+            </isNotEmpty>
+            <isNotEmpty property="source" prepend="and">
+                <![CDATA[ source = #source# ]]>
+            </isNotEmpty>
+            <isNotEmpty property="platform" prepend="and">
+                <![CDATA[ platform = #platform# ]]>
+            </isNotEmpty>
+            <isNotEmpty property="config" prepend="and">
+                <![CDATA[ config = #config# ]]>
+            </isNotEmpty>
+            <isNotEmpty property="isDelete" prepend="and">
+                <![CDATA[ is_delete = #isDelete# ]]>
+            </isNotEmpty>
+            <isNotEmpty property="createdBy" prepend="and">
+                <![CDATA[ created_by = #createdBy# ]]>
+            </isNotEmpty>
+            <isNotEmpty property="createdAt" prepend="and">
+                <![CDATA[ created_at = #createdAt# ]]>
+            </isNotEmpty>
+            <isNotEmpty property="changedBy" prepend="and">
+                <![CDATA[ changed_by = #changedBy# ]]>
+            </isNotEmpty>
+            <isNotEmpty property="changedAt" prepend="and">
+                <![CDATA[ changed_at = #changedAt# ]]>
+            </isNotEmpty>
+        </dynamic>
+    </select>
+    <!-- ========================================================================
+      DELETE 
+    ========================================================================= -->
+    <!--删除（物理）-->
+    <delete id="del" parameterClass="java.lang.Long" >
+      <![CDATA[
+      delete from m_sms_config
+      where id = #id#
+      ]]>
+    </delete>
+    
+
+    <!-- ======================================================================== 
+      INSERT 
+    ========================================================================= -->
+    <!--保存-->
+    <insert id="save" parameterClass="smsConfig" >
+      insert into m_sms_config
+        <dynamic prepend="(" >
+            <isNotNull prepend="," property="id" >
+        	id 
+        	</isNotNull>
+            <isNotNull prepend="," property="source" >
+        	source 
+        	</isNotNull>
+            <isNotNull prepend="," property="platform" >
+        	platform 
+        	</isNotNull>
+            <isNotNull prepend="," property="config" >
+        	config 
+        	</isNotNull>
+            <isNotNull prepend="," property="isDelete" >
+        	is_delete 
+        	</isNotNull>
+            <isNotNull prepend="," property="createdBy" >
+        	created_by 
+        	</isNotNull>
+            <isNotNull prepend="," property="createdAt" >
+        	created_at 
+        	</isNotNull>
+            <isNotNull prepend="," property="changedBy" >
+        	changed_by 
+        	</isNotNull>
+            <isNotNull prepend="," property="changedAt" >
+        	changed_at 
+        	</isNotNull>
+        )
+        </dynamic>
+         VALUES 
+        <dynamic prepend="(" >
+            <isNotNull prepend="," property="id" >
+        	<![CDATA[ #id#  ]]>
+        	</isNotNull>
+            <isNotNull prepend="," property="source" >
+        	<![CDATA[ #source#  ]]>
+        	</isNotNull>
+            <isNotNull prepend="," property="platform" >
+        	<![CDATA[ #platform#  ]]>
+        	</isNotNull>
+            <isNotNull prepend="," property="config" >
+        	<![CDATA[ #config#  ]]>
+        	</isNotNull>
+            <isNotNull prepend="," property="isDelete" >
+        	<![CDATA[ #isDelete#  ]]>
+        	</isNotNull>
+            <isNotNull prepend="," property="createdBy" >
+        	<![CDATA[ #createdBy#  ]]>
+        	</isNotNull>
+            <isNotNull prepend="," property="createdAt" >
+        	<![CDATA[ #createdAt#  ]]>
+        	</isNotNull>
+            <isNotNull prepend="," property="changedBy" >
+        	<![CDATA[ #changedBy#  ]]>
+        	</isNotNull>
+            <isNotNull prepend="," property="changedAt" >
+        	<![CDATA[ #changedAt#  ]]>
+        	</isNotNull>
+        )     
+        </dynamic>
+         
+      <selectKey resultClass="java.lang.Long" keyProperty="id">
+			SELECT LAST_INSERT_ID() as id
+	  </selectKey>
+    </insert>
+    
+    <!-- ======================================================================== 
+      UPDATE 
+    ========================================================================= -->
+    <!--更新-->
+    <update id="update" parameterClass="smsConfig">
+      update m_sms_config
+      <dynamic prepend="set" >
+        <isNotNull prepend="," property="source" >
+          <![CDATA[ source = #source# ]]>
+        </isNotNull>
+        <isNotNull prepend="," property="platform" >
+          <![CDATA[ platform = #platform# ]]>
+        </isNotNull>
+        <isNotNull prepend="," property="config" >
+          <![CDATA[ config = #config# ]]>
+        </isNotNull>
+        <isNotNull prepend="," property="isDelete" >
+          <![CDATA[ is_delete = #isDelete# ]]>
+        </isNotNull>
+        <isNotNull prepend="," property="createdBy" >
+          <![CDATA[ created_by = #createdBy# ]]>
+        </isNotNull>
+        <isNotNull prepend="," property="createdAt" >
+          <![CDATA[ created_at = #createdAt# ]]>
+        </isNotNull>
+        <isNotNull prepend="," property="changedBy" >
+          <![CDATA[ changed_by = #changedBy# ]]>
+        </isNotNull>
+        <isNotNull prepend="," property="changedAt" >
+          <![CDATA[ changed_at = #changedAt# ]]>
+        </isNotNull>
+      </dynamic>
+      <![CDATA[
+      where id = #id#
+      ]]>
+    </update>
+    
+    <!--单条删除（逻辑）-->
+    <update id="logicDel" parameterClass="java.lang.Long">
+      <![CDATA[
+      update m_sms_config
+      set is_delete = 1
+      where id = #id#
+       ]]>
+    </update>
+    
+     <!--批量删除（逻辑）-->
+     <update id="delBatch" parameterClass="smsConfigVo">
+      update m_sms_config
+      set is_delete = 1
+      where id in
+      <iterate property="codes" open="(" close=")" conjunction=",">#codes[]#</iterate>
+    </update>
+
+    <!-- ========================================================================
+     自定义sql
+    ========================================================================= -->
+
+
+</sqlMap>

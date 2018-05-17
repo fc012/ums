@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration status="OFF" monitorInterval="5">
+    <Properties>
+        <Property name="LogLayout">%d{yyyy-MM-dd HH:mm:ss.SSS} %-5level [%class{36}(%L)] @%M %msg%xEx%n</Property>
+        <Property name="log_dir">${sys:ums.log.root}</Property>
+        <Property name="log_level">${sys:ums.log.level}</Property>
+    </Properties>
+
+    <appenders>
+        <Console name="Console" target="SYSTEM_OUT">
+            <PatternLayout pattern="${LogLayout}"/>
+        </Console>
+
+        <RollingFile name="Trade" fileName="${log_dir}/ums.log"
+                     filePattern="${log_dir}/trade.%d{yyyy-MM-dd}_%i.log">
+            <PatternLayout pattern="${LogLayout}"/>
+            <Policies>
+                <TimeBasedTriggeringPolicy modulate="true" interval="1"/>
+                <SizeBasedTriggeringPolicy size="100 M"/>
+            </Policies>
+            <DefaultRolloverStrategy fileIndex="max" max="10">
+                <Delete basePath="${log_dir}" maxDepth="1">
+                    <IfFileName glob="trade*.log"/>
+                    <IfLastModified age="5d"/>
+                </Delete>
+            </DefaultRolloverStrategy>
+
+        </RollingFile>
+
+        <RollingFile name="Request" fileName="${log_dir}/request.log"
+                     filePattern="${log_dir}/request.%d{yyyy-MM-dd}_%i.log">
+            <PatternLayout pattern="${LogLayout}"/>
+            <Policies>
+                <TimeBasedTriggeringPolicy modulate="true" interval="1"/>
+                <SizeBasedTriggeringPolicy size="100M"/>
+            </Policies>
+            <DefaultRolloverStrategy fileIndex="max" max="10">
+                <Delete basePath="${log_dir}" maxDepth="1">
+                    <IfFileName glob="request*.log"/>
+                    <IfLastModified age="5d"/>
+                </Delete>
+            </DefaultRolloverStrategy>
+        </RollingFile>
+    </appenders>
+    <loggers>
+        <!-- 全局配置 -->
+        <root level="${log_level}">
+            <appender-ref ref="Console"/>
+            <AppenderRef ref="Trade"/>
+        </root>
+
+        <logger name="request" level="info" additivity="false">
+            <appender-ref ref="Console"/>
+            <AppenderRef ref="Request"/>
+        </logger>
+
+        <!-- Spring Loggers -->
+        <logger name="org.springframework" level="debug"/>
+        <logger name="org.springframework.beans" level="info"/>
+        <logger name="org.springframework.core" level="info"/>
+        <logger name="org.springframework.context" level="info"/>
+        <logger name="org.springframework.web" level="info"/>
+        <logger name="org.springframework.batch" level="info"/>
+        <logger name="org.springframework.integration" level="info"/>
+        <!-- jdbc loggers -->
+        <logger name="jdbc.sqltiming" level="OFF"></logger>
+        <logger name="jdbc.resultsettable" level="OFF"></logger>
+        <logger name="jdbc.sqlonly" level="info"></logger>
+        <logger name="jdbc.audit" level="OFF"></logger>
+        <logger name="jdbc.resultset" level="OFF"></logger>
+        <logger name="jdbc.connection" level="OFF"></logger>
+        <!-- MyBatis Loggers -->
+        <logger name="org.mybatis" level="OFF"/>
+        <logger name="org.apache.ibatis" level="OFF"/>
+
+    </loggers>
+</configuration>

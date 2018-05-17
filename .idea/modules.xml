@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/carme-parent.iml" filepath="$PROJECT_DIR$/carme-parent.iml" />
+      <module fileurl="file://$PROJECT_DIR$/carme-ums/carme-ums.iml" filepath="$PROJECT_DIR$/carme-ums/carme-ums.iml" />
+      <module fileurl="file://$PROJECT_DIR$/generate-code/generate-code.iml" filepath="$PROJECT_DIR$/generate-code/generate-code.iml" />
+      <module fileurl="file://$PROJECT_DIR$/platform-service/platform-service.iml" filepath="$PROJECT_DIR$/platform-service/platform-service.iml" />
+    </modules>
+  </component>
+</project>

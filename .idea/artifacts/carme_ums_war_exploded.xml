@@ -1,0 +1,76 @@
+<component name="ArtifactManager">
+  <artifact type="exploded-war" name="carme-ums:war exploded">
+    <output-path>$PROJECT_DIR$/carme-ums/target/carme-ums</output-path>
+    <root id="root">
+      <element id="directory" name="WEB-INF">
+        <element id="directory" name="classes">
+          <element id="module-output" name="carme-ums" />
+        </element>
+        <element id="directory" name="lib">
+          <element id="archive" name="platform-service-1.0-SNAPSHOT.jar">
+            <element id="module-output" name="platform-service" />
+          </element>
+          <element id="library" level="project" name="Maven: org.springframework:spring-webmvc:4.0.5.RELEASE" />
+          <element id="library" level="project" name="Maven: org.springframework:spring-beans:4.0.5.RELEASE" />
+          <element id="library" level="project" name="Maven: org.springframework:spring-context:4.0.5.RELEASE" />
+          <element id="library" level="project" name="Maven: org.springframework:spring-core:4.0.5.RELEASE" />
+          <element id="library" level="project" name="Maven: org.springframework:spring-expression:4.0.5.RELEASE" />
+          <element id="library" level="project" name="Maven: org.springframework:spring-web:4.0.5.RELEASE" />
+          <element id="library" level="project" name="Maven: org.springframework:spring-jdbc:4.0.5.RELEASE" />
+          <element id="library" level="project" name="Maven: org.springframework:spring-tx:4.0.5.RELEASE" />
+          <element id="library" level="project" name="Maven: org.springframework:spring-context-support:4.0.5.RELEASE" />
+          <element id="library" level="project" name="Maven: org.springframework:spring-jms:4.0.5.RELEASE" />
+          <element id="library" level="project" name="Maven: org.springframework:spring-aop:4.0.5.RELEASE" />
+          <element id="library" level="project" name="Maven: aopalliance:aopalliance:1.0" />
+          <element id="library" level="project" name="Maven: org.aspectj:aspectjrt:1.7.4" />
+          <element id="library" level="project" name="Maven: org.aspectj:aspectjweaver:1.7.4" />
+          <element id="library" level="project" name="Maven: org.apache.logging.log4j:log4j-core:2.5" />
+          <element id="library" level="project" name="Maven: org.apache.logging.log4j:log4j-api:2.5" />
+          <element id="library" level="project" name="Maven: org.apache.logging.log4j:log4j-slf4j-impl:2.5" />
+          <element id="library" level="project" name="Maven: org.apache.logging.log4j:log4j-web:2.0.2" />
+          <element id="library" level="project" name="Maven: org.apache.logging.log4j:log4j-jcl:2.5" />
+          <element id="library" level="project" name="Maven: commons-logging:commons-logging:1.2" />
+          <element id="library" level="project" name="Maven: org.slf4j:slf4j-api:1.7.10" />
+          <element id="library" level="project" name="Maven: mysql:mysql-connector-java:5.1.6" />
+          <element id="library" level="project" name="Maven: redis.clients:jedis:2.7.3" />
+          <element id="library" level="project" name="Maven: org.apache.commons:commons-pool2:2.3" />
+          <element id="library" level="project" name="Maven: com.alibaba:druid:1.0.14" />
+          <element id="library" level="project" name="Maven: com.googlecode.log4jdbc:log4jdbc:1.2" />
+          <element id="library" level="project" name="Maven: org.mybatis:mybatis:3.2.8" />
+          <element id="library" level="project" name="Maven: org.mybatis:mybatis-spring:1.2.2" />
+          <element id="library" level="project" name="Maven: org.apache.activemq:activemq-client:5.10.2" />
+          <element id="library" level="project" name="Maven: org.apache.geronimo.specs:geronimo-jms_1.1_spec:1.1.1" />
+          <element id="library" level="project" name="Maven: org.fusesource.hawtbuf:hawtbuf:1.10" />
+          <element id="library" level="project" name="Maven: org.apache.geronimo.specs:geronimo-j2ee-management_1.1_spec:1.0.1" />
+          <element id="library" level="project" name="Maven: org.codehaus.jackson:jackson-core-lgpl:1.9.13" />
+          <element id="library" level="project" name="Maven: org.codehaus.jackson:jackson-mapper-lgpl:1.9.13" />
+          <element id="library" level="project" name="Maven: com.alibaba:fastjson:1.2.6" />
+          <element id="library" level="project" name="Maven: com.google.guava:guava:17.0" />
+          <element id="library" level="project" name="Maven: commons-beanutils:commons-beanutils:1.9.2" />
+          <element id="library" level="project" name="Maven: commons-codec:commons-codec:1.9" />
+          <element id="library" level="project" name="Maven: org.apache.commons:commons-lang3:3.3.2" />
+          <element id="library" level="project" name="Maven: commons-lang:commons-lang:2.6" />
+          <element id="library" level="project" name="Maven: commons-collections:commons-collections:3.2.1" />
+          <element id="library" level="project" name="Maven: commons-fileupload:commons-fileupload:1.2" />
+          <element id="library" level="project" name="Maven: commons-io:commons-io:2.4" />
+          <element id="library" level="project" name="Maven: commons-pool:commons-pool:1.5.6" />
+          <element id="library" level="project" name="Maven: org.apache.httpcomponents:httpclient:4.3.5" />
+          <element id="library" level="project" name="Maven: org.apache.httpcomponents:httpcore:4.3.2" />
+          <element id="library" level="project" name="Maven: cn.jpush.api:jpush-client:3.3.4" />
+          <element id="library" level="project" name="Maven: cn.jpush.api:jiguang-common:1.0.9" />
+          <element id="library" level="project" name="Maven: com.squareup.okhttp3:okhttp:3.3.1" />
+          <element id="library" level="project" name="Maven: com.squareup.okio:okio:1.8.0" />
+          <element id="library" level="project" name="Maven: io.netty:netty-all:4.1.6.Final" />
+          <element id="library" level="project" name="Maven: com.google.code.gson:gson:2.3" />
+          <element id="library" level="project" name="Maven: com.submail:submail-sdk:1.0.0" />
+          <element id="library" level="project" name="Maven: org.apache.submail:jsonlib:jdk15:2.2.3" />
+          <element id="library" level="project" name="Maven: org.apache.submail:ezmorph:1.0.3" />
+        </element>
+      </element>
+      <element id="directory" name="META-INF">
+        <element id="file-copy" path="$PROJECT_DIR$/carme-ums/target/carme-ums/META-INF/MANIFEST.MF" />
+      </element>
+      <element id="javaee-facet-resources" facet="carme-ums/web/Web" />
+    </root>
+  </artifact>
+</component>

@@ -1,0 +1,8 @@
+<component name="ArtifactManager">
+  <artifact type="war" name="carme-ums:war">
+    <output-path>$PROJECT_DIR$/carme-ums/target</output-path>
+    <root id="archive" name="carme-ums.war">
+      <element id="artifact" artifact-name="carme-ums:war exploded" />
+    </root>
+  </artifact>
+</component>

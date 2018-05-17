@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:p="http://www.springframework.org/schema/p"
+       xmlns:aop="http://www.springframework.org/schema/aop"
+       xmlns:mvc="http://www.springframework.org/schema/mvc"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xsi:schemaLocation="
+        http://www.springframework.org/schema/mvc
+        http://www.springframework.org/schema/mvc/spring-mvc-4.0.xsd
+        http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans-4.0.xsd
+        http://www.springframework.org/schema/context
+        http://www.springframework.org/schema/context/spring-context-4.0.xsd
+        http://www.springframework.org/schema/aop 
+		http://www.springframework.org/schema/aop/spring-aop-4.0.xsd
+        ">
+
+    <context:component-scan base-package="com.carme.ums.controller,com.carme.ums.mq,com.carme.ums.component"/>
+    <mvc:annotation-driven/>
+    <!-- 将静态文静指定到某个特定的文件夹中统一处理 -->
+
+    <!--配置变量注入 -->
+    <bean id="webPropertyConfigurer"
+          class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+        <property name="ignoreUnresolvablePlaceholders" value="true"/>
+        <property name="locations">
+            <list>
+                <value>classpath:config/ums-config.properties</value>
+            </list>
+        </property>
+    </bean>
+
+    <!-- 参数拦截器 -->
+    <bean id="paramInterceptor" class="com.carme.ums.interceptor.ParamInterceptor"/>
+    <!-- 参数拦截器规则 -->
+    <aop:config>
+        <aop:pointcut id="paramOperation" expression="execution(* com.carme.ums.controller..*.*(..))"/>
+        <aop:advisor advice-ref="paramInterceptor" pointcut-ref="paramOperation"/>
+    </aop:config>
+
+    <import resource="classpath*:spring/ums-core.xml"/>
+    <import resource="classpath*:spring/ums-activemq.xml"/>
+    <import resource="classpath*:spring/spring-service.xml"/>
+</beans>

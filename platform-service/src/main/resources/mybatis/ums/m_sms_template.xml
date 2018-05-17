@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.carme.ums.dao.SmsTemplateDao">
+
+    <!-- ========================================================================
+     								自定义sql
+    ========================================================================= -->
+    <resultMap id="ExtResultMap" type="smsTemplateBo">
+        <result column="id" property="id"/>
+        <result column="source" property="source"/>
+        <result column="template_no" property="templateNo"/>
+        <result column="third_template_no" property="thirdTemplateNo"/>
+        <result column="is_delete" property="isDelete"/>
+        <result column="created_by" property="createdBy"/>
+        <result column="created_at" property="createdAt"/>
+        <result column="changed_by" property="changedBy"/>
+        <result column="changed_at" property="changedAt"/>
+    </resultMap>
+
+    <sql id="Ext_Column_List">
+        <![CDATA[
+        id ,
+        source ,
+        template_no ,
+        third_template_no ,
+        is_delete ,
+        created_by ,
+        created_at ,
+        changed_by ,
+        changed_at 
+        ]]>
+    </sql>
+
+    <!--可扩展查询-->
+    <select id="extQuery" resultMap="ExtResultMap" parameterType="smsTemplateBo">
+        select
+        <include refid="Ext_Column_List"/>
+        from m_sms_template where 1 = 1
+            <if test="id != null">
+                and id = #{id}
+            </if>
+            <if test="source != null">
+                and source = #{source}
+            </if>
+            <if test="templateNo != null">
+                and template_no = #{templateNo}
+            </if>
+            <if test="thirdTemplateNo != null">
+                and third_template_no = #{thirdTemplateNo}
+            </if>
+            <if test="isDelete != null">
+                and is_delete = #{isDelete}
+            </if>
+            <if test="createdBy != null">
+                and created_by = #{createdBy}
+            </if>
+            <if test="createdAt != null">
+                and created_at = #{createdAt}
+            </if>
+            <if test="changedBy != null">
+                and changed_by = #{changedBy}
+            </if>
+            <if test="changedAt != null">
+                and changed_at = #{changedAt}
+            </if>
+        and is_delete = 0
+    </select>
+
+
+
+</mapper>

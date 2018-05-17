@@ -1,0 +1,284 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN" "http://ibatis.apache.org/dtd/sql-map-2.dtd" >
+ <sqlMap namespace="smsTemplate" >
+
+    <!-- ======================================================================== 
+      COMMON （别名、resultMap、查询字段、sql...）
+    ========================================================================= -->
+    <typeAlias alias="smsTemplate" type="com.carme.ums.bo.sms.SmsTemplate" />
+    <typeAlias alias="smsTemplateVo" type="com.carme.ums.vo.sms.SmsTemplateVo" />
+    <typeAlias alias="querySmsTemplateVo" type="com.carme.ums.vo.sms.QuerySmsTemplateVo" />
+
+    <resultMap id="BaseResultMap" class="smsTemplate">
+        <result column="id" property="id" />
+        <result column="source" property="source" />
+        <result column="template_no" property="templateNo" />
+        <result column="third_template_no" property="thirdTemplateNo" />
+        <result column="is_delete" property="isDelete" />
+        <result column="created_by" property="createdBy" />
+        <result column="created_at" property="createdAt" />
+        <result column="changed_by" property="changedBy" />
+        <result column="changed_at" property="changedAt" />
+    </resultMap>
+
+    <resultMap id="voResultMap" class="smsTemplateVo">
+        <result column="id" property="id" />
+        <result column="source" property="source" />
+        <result column="template_no" property="templateNo" />
+        <result column="third_template_no" property="thirdTemplateNo" />
+        <result column="is_delete" property="isDelete" />
+        <result column="created_by" property="createdBy" />
+        <result column="created_at" property="createdAt" />
+        <result column="changed_by" property="changedBy" />
+        <result column="changed_at" property="changedAt" />
+    </resultMap>
+
+    <sql id="Base_Column_List" >
+        <![CDATA[
+              id ,
+              source ,
+              template_no ,
+              third_template_no ,
+              is_delete ,
+              created_by ,
+              created_at ,
+              changed_by ,
+              changed_at 
+        ]]>
+    </sql>
+
+    <sql id="select_column">
+	     <![CDATA[
+	        	id ,
+	        	source ,
+	        	template_no ,
+	        	third_template_no ,
+	        	is_delete ,
+	        	created_by ,
+	        	created_at ,
+	        	changed_by ,
+	        	changed_at 
+	    ]]>	 		
+	</sql>
+	
+	<sql id="querySmsTemplatePage_where">
+		from m_sms_template 
+		where  1 = 1	
+		and is_delete = 0
+	</sql>
+    
+    <!-- ======================================================================== 
+      SELECT 
+    ========================================================================= -->
+    <!--根据ID查询记录-->
+    <select id="getById" resultMap="BaseResultMap" parameterClass="java.lang.Long" >
+      select 
+      <include refid="Base_Column_List" />
+      <![CDATA[
+      from m_sms_template
+      where id = #id# and is_delete=0
+      ]]>
+    </select>
+    
+    <!--分页查询-->
+    <select id="querySmsTemplatePage" parameterClass="querySmsTemplateVo"
+		resultMap="voResultMap">
+		<include refid="Page_SqlMap.pagePrefix"/>
+			select 
+			<include refid="smsTemplate.select_column"/>
+			<include refid="smsTemplate.querySmsTemplatePage_where"/>
+		<include refid="Page_SqlMap.pageSuffix"/>
+	</select>
+	
+	<!--查询数据条数-->
+	<select id="querySmsTemplatePage_count" parameterClass="querySmsTemplateVo"  resultClass="java.lang.Integer">
+		select count(*)
+		<include refid="querySmsTemplatePage_where"/>
+	</select>
+	
+	<!--通过Ids查询多条记录-->
+    <select id="getByIds" resultMap="BaseResultMap" parameterClass="smsTemplate">
+	   select <include refid="Base_Column_List"/>
+	   from m_sms_template where is_delete = 0 and id in
+	   <iterate property="codes" open="(" close=")" conjunction=",">#codes[]#</iterate>  
+	</select>
+
+    <!--多条件组合查询-->
+    <select id="query" resultMap="voResultMap" parameterClass="smsTemplateVo">
+        select <include refid="Base_Column_List"/>
+        from m_sms_template where is_delete = 0
+        <dynamic>
+            <isNotEmpty property="id" prepend="and">
+                <![CDATA[ id = #id# ]]>
+            </isNotEmpty>
+            <isNotEmpty property="source" prepend="and">
+                <![CDATA[ source = #source# ]]>
+            </isNotEmpty>
+            <isNotEmpty property="templateNo" prepend="and">
+                <![CDATA[ template_no = #templateNo# ]]>
+            </isNotEmpty>
+            <isNotEmpty property="thirdTemplateNo" prepend="and">
+                <![CDATA[ third_template_no = #thirdTemplateNo# ]]>
+            </isNotEmpty>
+            <isNotEmpty property="isDelete" prepend="and">
+                <![CDATA[ is_delete = #isDelete# ]]>
+            </isNotEmpty>
+            <isNotEmpty property="createdBy" prepend="and">
+                <![CDATA[ created_by = #createdBy# ]]>
+            </isNotEmpty>
+            <isNotEmpty property="createdAt" prepend="and">
+                <![CDATA[ created_at = #createdAt# ]]>
+            </isNotEmpty>
+            <isNotEmpty property="changedBy" prepend="and">
+                <![CDATA[ changed_by = #changedBy# ]]>
+            </isNotEmpty>
+            <isNotEmpty property="changedAt" prepend="and">
+                <![CDATA[ changed_at = #changedAt# ]]>
+            </isNotEmpty>
+        </dynamic>
+    </select>
+    <!-- ========================================================================
+      DELETE 
+    ========================================================================= -->
+    <!--删除（物理）-->
+    <delete id="del" parameterClass="java.lang.Long" >
+      <![CDATA[
+      delete from m_sms_template
+      where id = #id#
+      ]]>
+    </delete>
+    
+
+    <!-- ======================================================================== 
+      INSERT 
+    ========================================================================= -->
+    <!--保存-->
+    <insert id="save" parameterClass="smsTemplate" >
+      insert into m_sms_template
+        <dynamic prepend="(" >
+            <isNotNull prepend="," property="id" >
+        	id 
+        	</isNotNull>
+            <isNotNull prepend="," property="source" >
+        	source 
+        	</isNotNull>
+            <isNotNull prepend="," property="templateNo" >
+        	template_no 
+        	</isNotNull>
+            <isNotNull prepend="," property="thirdTemplateNo" >
+        	third_template_no 
+        	</isNotNull>
+            <isNotNull prepend="," property="isDelete" >
+        	is_delete 
+        	</isNotNull>
+            <isNotNull prepend="," property="createdBy" >
+        	created_by 
+        	</isNotNull>
+            <isNotNull prepend="," property="createdAt" >
+        	created_at 
+        	</isNotNull>
+            <isNotNull prepend="," property="changedBy" >
+        	changed_by 
+        	</isNotNull>
+            <isNotNull prepend="," property="changedAt" >
+        	changed_at 
+        	</isNotNull>
+        )
+        </dynamic>
+         VALUES 
+        <dynamic prepend="(" >
+            <isNotNull prepend="," property="id" >
+        	<![CDATA[ #id#  ]]>
+        	</isNotNull>
+            <isNotNull prepend="," property="source" >
+        	<![CDATA[ #source#  ]]>
+        	</isNotNull>
+            <isNotNull prepend="," property="templateNo" >
+        	<![CDATA[ #templateNo#  ]]>
+        	</isNotNull>
+            <isNotNull prepend="," property="thirdTemplateNo" >
+        	<![CDATA[ #thirdTemplateNo#  ]]>
+        	</isNotNull>
+            <isNotNull prepend="," property="isDelete" >
+        	<![CDATA[ #isDelete#  ]]>
+        	</isNotNull>
+            <isNotNull prepend="," property="createdBy" >
+        	<![CDATA[ #createdBy#  ]]>
+        	</isNotNull>
+            <isNotNull prepend="," property="createdAt" >
+        	<![CDATA[ #createdAt#  ]]>
+        	</isNotNull>
+            <isNotNull prepend="," property="changedBy" >
+        	<![CDATA[ #changedBy#  ]]>
+        	</isNotNull>
+            <isNotNull prepend="," property="changedAt" >
+        	<![CDATA[ #changedAt#  ]]>
+        	</isNotNull>
+        )     
+        </dynamic>
+         
+      <selectKey resultClass="java.lang.Long" keyProperty="id">
+			SELECT LAST_INSERT_ID() as id
+	  </selectKey>
+    </insert>
+    
+    <!-- ======================================================================== 
+      UPDATE 
+    ========================================================================= -->
+    <!--更新-->
+    <update id="update" parameterClass="smsTemplate">
+      update m_sms_template
+      <dynamic prepend="set" >
+        <isNotNull prepend="," property="source" >
+          <![CDATA[ source = #source# ]]>
+        </isNotNull>
+        <isNotNull prepend="," property="templateNo" >
+          <![CDATA[ template_no = #templateNo# ]]>
+        </isNotNull>
+        <isNotNull prepend="," property="thirdTemplateNo" >
+          <![CDATA[ third_template_no = #thirdTemplateNo# ]]>
+        </isNotNull>
+        <isNotNull prepend="," property="isDelete" >
+          <![CDATA[ is_delete = #isDelete# ]]>
+        </isNotNull>
+        <isNotNull prepend="," property="createdBy" >
+          <![CDATA[ created_by = #createdBy# ]]>
+        </isNotNull>
+        <isNotNull prepend="," property="createdAt" >
+          <![CDATA[ created_at = #createdAt# ]]>
+        </isNotNull>
+        <isNotNull prepend="," property="changedBy" >
+          <![CDATA[ changed_by = #changedBy# ]]>
+        </isNotNull>
+        <isNotNull prepend="," property="changedAt" >
+          <![CDATA[ changed_at = #changedAt# ]]>
+        </isNotNull>
+      </dynamic>
+      <![CDATA[
+      where id = #id#
+      ]]>
+    </update>
+    
+    <!--单条删除（逻辑）-->
+    <update id="logicDel" parameterClass="java.lang.Long">
+      <![CDATA[
+      update m_sms_template
+      set is_delete = 1
+      where id = #id#
+       ]]>
+    </update>
+    
+     <!--批量删除（逻辑）-->
+     <update id="delBatch" parameterClass="smsTemplateVo">
+      update m_sms_template
+      set is_delete = 1
+      where id in
+      <iterate property="codes" open="(" close=")" conjunction=",">#codes[]#</iterate>
+    </update>
+
+    <!-- ========================================================================
+     自定义sql
+    ========================================================================= -->
+
+
+</sqlMap>

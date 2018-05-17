@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:p="http://www.springframework.org/schema/p"
+       xmlns:aop="http://www.springframework.org/schema/aop"
+       xmlns:mvc="http://www.springframework.org/schema/mvc"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xsi:schemaLocation="
+        http://www.springframework.org/schema/mvc
+        http://www.springframework.org/schema/mvc/spring-mvc-4.0.xsd
+        http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans-4.0.xsd
+        http://www.springframework.org/schema/context
+        http://www.springframework.org/schema/context/spring-context-4.0.xsd
+        http://www.springframework.org/schema/aop 
+		http://www.springframework.org/schema/aop/spring-aop-4.0.xsd
+        ">
+
+
+    <!-- start 推送 -->
+    <bean id="pushConsumer" class="com.carme.ums.mq.UmsPushConsumer"/>
+
+    <bean id="umsTradeSuccListenerContainer"
+          class="org.springframework.jms.listener.DefaultMessageListenerContainer">
+        <property name="connectionFactory" ref="connectionFactory"/>
+        <property name="destination" ref="umsPushQueue"/>
+        <property name="messageListener" ref="pushConsumer"/>
+        <property name="concurrentConsumers" value="1"/>
+    </bean>
+    <!-- end 推送 -->
+
+
+    <!-- start 短信 -->
+
+    <bean id="smsConsumer" class="com.carme.ums.mq.UmsSmsConsumer"/>
+
+    <bean id="pushSuccListenerContainer"
+          class="org.springframework.jms.listener.DefaultMessageListenerContainer">
+        <property name="connectionFactory" ref="connectionFactory"/>
+        <property name="destination" ref="umsSmsQueue"/>
+        <property name="messageListener" ref="smsConsumer"/>
+        <property name="concurrentConsumers" value="5"/>
+    </bean>
+    <!-- end 短信 -->
+</beans>

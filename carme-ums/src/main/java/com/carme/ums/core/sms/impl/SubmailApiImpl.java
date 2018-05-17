@@ -57,7 +57,5 @@ public class SubmailApiImpl implements SmsApi {
             log.error(e.getMessage(), e);
         }
         return resp;
-
-        
     }
 }
